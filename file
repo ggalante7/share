@@ -1,1 +1,184 @@
-dwadwadwa
+function toContact(event){
+    let body = event.body;
+    let contacts = {
+        blocking: "wait",
+        contacts: body.contacts
+    }
+
+    return contacts;
+}
+
+function toMessage(event){
+    let body = event.body
+    let message = {};
+
+    switch (body.type) {
+        case "text":
+            message.to = body.to
+            message.type = "text"
+            message.recipient_type = "individual"
+            message.text = {
+                body: body.text
+            }
+            break;
+        case "url":
+            message.to = body.to
+            message.type = "text"
+            message.preview_url = true
+            message.text = {
+                body: body.text
+            }
+            break;
+        case "group":
+            message.to = body.groupId
+            message.type = "text"
+            message.recipient_type = "group"
+            message.text = {
+                body: body.text
+            }
+            break;
+        case "hsm":
+            message.to = body.to
+            message.type = "hsm"
+            message.hsm = body.hsm
+            message.hsm.language = {
+                policy: "TBD",
+                code: "TBD"
+            }
+            break;
+        case "hsm-ttl":
+            message.to = body.to
+            message.ttl = body.messageTTL,
+            message.type = "hsm"
+            message.hsm = body.hsm
+            message.hsm.language = {
+                policy: "TBD",
+                code: "TBD"
+            }
+            break;
+        case "template":
+            message.to = body.to
+            message.ttl = body.messageTTL,
+            message.type = "template"
+            message.template = body.template
+            message.template.language = {
+                policy: "TBD",
+                code: "TBD"
+            }
+            break;
+        case "image":
+            message.to = body.to
+            message.type = "image"
+            message.recipient_type = "individual"
+            message.image = {
+                caption: body.imageCaption,
+                id: body.imageId
+            }
+            break;
+        case "image-url":
+            message.to = body.to
+            message.type = "image"
+            message.recipient_type = "individual"
+            message.image = {
+                caption: body.imageCaption,
+                link: body.imageLink
+            }
+            break;
+        case "audio":
+            message.to = body.to
+            message.type = "audio"
+            message.recipient_type = "individual"
+            message.audio = {
+                id: body.audioId
+            }
+            break;
+        case "audio-url":
+            message.to = body.to
+            message.type = "audio"
+            message.recipient_type = "individual"
+            message.audio = {
+                link: body.audioLink
+            }
+            break;
+        case "video":
+            message.to = body.to
+            message.type = "video"
+            message.recipient_type = "individual"
+            message.video = {
+                caption: body.videoCaption,
+                id: body.videoId
+            }
+            break;
+        case "video-url":
+            message.to = body.to
+            message.type = "video"
+            message.recipient_type = "individual"
+            message.video = {
+                caption: body.videoCaption,
+                link: body.videoLink
+            }
+            break;
+        case "doc":
+            message.to = body.to
+            message.type = "document"
+            message.recipient_type = "individual"
+            message.document = {
+                caption: body.fileCaption,
+                id: body.fileId,
+                filename: body.filename
+            }
+            break;
+        case "doc-url":
+            message.to = body.to
+            message.type = "document"
+            message.recipient_type = "individual"
+            message.document = {
+                caption: body.fileCaption,
+                link: body.fileLink,
+                filename: body.filename
+            }
+            break;
+        case "contacts":
+            message.to = body.to
+            message.type = "contacts"
+            message.recipient_type = "individual"
+            message.contacts = body.contacts
+            break;
+        case "location":
+            message.to = body.to
+            message.type = "location"
+            message.recipient_type = "individual"
+            message.location = {
+                longitude: body.longitude,
+                latitude: body.latitude,
+                name: body.addressName,
+                address: body.address
+            }
+            break;
+        case "sticker":
+            message.to = body.to
+            message.type = "sticker"
+            message.recipient_type = "individual"
+            message.sticker = {
+                id: body.stickerId
+            }
+            break;
+        case "sticker-url":
+            message.to = body.to
+            message.type = "sticker"
+            message.recipient_type = "individual"
+            message.sticker = {
+                link: body.stickerLink
+            }
+            break;
+        default:
+            message.to = body.to
+            message.type = "text"
+            message.recipient_type = "individual"
+            message.text = {
+                body: body.text
+            }
+            break;
+    }
+    return message;
+}
